@@ -7,39 +7,38 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import logger from 'redux-logger';
 import reduxPromise from 'redux-promise';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 // internal modules
 import App from './components/app';
 
 // State and reducers
 import messagesReducer from './reducers/messages_reducer';
-import selectedChannelReducer from './reducers/selected_channel_reducer';
 
-const identityReducer = (state = null) => state;
+// render an instance of the component in the DOM
+const root = document.getElementById("root");
+const initialStateChannels = JSON.parse(root.dataset.channels).map(c => c.name)
 
 const initialState = {
   messages: [],
-  channels: ['general', 'react', 'paris'],
-  currentUser: prompt("What is your username?") || `anonymous${Math.floor(10 + (Math.random() * 90))}`,
-  selectedChannel: 'general'
+  channels: initialStateChannels,
 };
 
 const reducers = combineReducers({
   messages: messagesReducer,
-  channels: identityReducer,
-  currentUser: identityReducer,
-  selectedChannel: selectedChannelReducer
+  channels: (state = null) => state,
 });
 
 // Middlewares
 const middlewares = applyMiddleware(reduxPromise, logger);
 const store = createStore(reducers, initialState, middlewares);
 
-// render an instance of the component in the DOM
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-root.render(
+ReactDOM.createRoot(root).render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="channels/:channel" element={<App />} />
+      </Routes>
+    </BrowserRouter>
   </Provider>
 );
