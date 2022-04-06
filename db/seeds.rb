@@ -1,3 +1,6 @@
+require 'faker'
+require 'pry'
+
 Message.destroy_all
 User.destroy_all
 Channel.destroy_all
@@ -7,20 +10,19 @@ ActiveRecord::Base.connection.tables.each do |t|
 end
 
 names = %w(general paris react)
-nicknames = %w(Papillard ssaunier monsieurpaillard krokrob Eschults)
+nicknames = %w(Papillard ssaunier monsieurpaillard krokrob Eschults JBBax)
 
 channels = names.map do |name|
   Channel.find_or_create_by(name: name)
 end
 
 users = nicknames.map do |nickname|
-  User.create(email: "#{nickname.downcase}@lewagon.com", nickname: nickname, password: "testtest")
+  User.create(email: "#{nickname.downcase}@lewagon.com", nickname: nickname, password: "password")
 end
 
-count = 99
 20.times do
-  Message.create! user: users.sample, channel: channels.sample, content: "Great content - #{count}"
-  count += 1
+	message_content = Faker::ChuckNorris.fact
+  Message.create! user: users.sample, channel: channels.sample, content: message_content
 end
 
 puts 'Channels:'
