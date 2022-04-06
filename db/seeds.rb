@@ -1,5 +1,4 @@
 require 'faker'
-require 'pry'
 
 Message.destroy_all
 User.destroy_all

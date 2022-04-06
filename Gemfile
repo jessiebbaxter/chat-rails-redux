@@ -40,9 +40,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'devise'
 
-gem 'pry', '~> 0.13.1'
-gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
-
 gem 'autoprefixer-rails', '10.2.5'
 gem 'font-awesome-sass'
 gem 'simple_form', github: 'heartcombo/simple_form'
@@ -55,6 +52,8 @@ group :development, :test do  gem 'pry-byebug'
 end
 
 group :development do
+  gem 'pry', '~> 0.13.1'
+  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
